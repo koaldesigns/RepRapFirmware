@@ -15,6 +15,7 @@
 // The Y motor output drives the distal arm joint, unless remapped using M584
 // Forward motion of a motor rotates the arm anticlockwise as seen from above (use M569 to reverse it)
 // Theta is the angle of the proximal arm joint from the reference position.
+
 // At theta = 0 the proximal arm points in the Cartesian +X direction
 // Phi is the angle of the distal arm relative to the Cartesian X axis. Therefore the angle of the distal arm joint is (phi - theta).
 // The M92 steps/mm settings for X and Y are interpreted as steps per degree of theta and phi respectively.
