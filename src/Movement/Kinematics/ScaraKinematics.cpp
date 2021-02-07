@@ -57,6 +57,7 @@ const char *ScaraKinematics::GetName(bool forStatusReport) const noexcept
 }
 
 // Calculate theta, psi and the new arm mode from a target position.
+
 // If the position is not reachable because it is out of radius limits, set theta and psi to NaN and return false.
 // Otherwise set theta and psi to the required values and return true if they are in range.
 // Note: theta and psi are now returned in degrees.
