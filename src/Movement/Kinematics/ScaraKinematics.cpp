@@ -164,7 +164,7 @@ bool ScaraKinematics::CartesianToMotorSteps(const float machinePos[], const floa
 	2 = same orientation as x-axis
 	*/
 		if (wristMode == 1)
-			motorPos[3] = lrintf(((-1 * (theta + psi)) + machinePas[3]) * stepsPerMm[3]);
+			motorPos[3] = lrintf(((-1 * (theta + psi)) + machinePos[3]) * stepsPerMm[3]);
 		else if (wristMode == 2)
 			motorPos[3] = lrintf((-1 * (theta + psi)) * stepsPerMm[3]);
 		else
