@@ -164,7 +164,7 @@ bool ScaraKinematics::CartesianToMotorSteps(const float machinePos[], const floa
 	2 = same orientation as x-axis
 	*/
 		if (wristMode == 1)
-			motorPos[3] = lrintf(((-1 * (theta + psi)) + beta) * stepsPerMm[3]);
+			motorPos[3] = lrintf(((-1 * (theta + psi)) + machinePas[3]) * stepsPerMm[3]);
 		else if (wristMode == 2)
 			motorPos[3] = lrintf((-1 * (theta + psi)) * stepsPerMm[3]);
 		else
@@ -191,7 +191,7 @@ void ScaraKinematics::MotorStepsToCartesian(const int32_t motorPos[], const floa
     cachedPsi = psi;
     cachedX = machinePos[X_AXIS] = (cosf(theta * DegreesToRadians) * proximalArmLength + cosf((psi + theta) * DegreesToRadians) * distalArmLength) - xOffset;
     cachedY = machinePos[Y_AXIS] = (sinf(theta * DegreesToRadians) * proximalArmLength + sinf((psi + theta) * DegreesToRadians) * distalArmLength) - yOffset;
-	machinePos[3] = beta;
+	machinePos[3] = ((float)motorPos[3]/stepsPerMm[3]);
     // On some machines (e.g. Helios), the X and/or Y arm motors also affect the Z height
     machinePos[Z_AXIS] = ((float)motorPos[Z_AXIS]/stepsPerMm[Z_AXIS]) + (crosstalk[1] * theta) + (crosstalk[2] * psi);
 
