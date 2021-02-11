@@ -75,7 +75,6 @@ private:
 	float betaLimits[2];
 	float crosstalk[3];								// proximal to distal, proximal to Z and distal to Z crosstalk
 	float wristMode;
-	float beta;
 	float xOffset;									// where bed X=0 is relative to the proximal joint
 	float yOffset;									// where bed Y=0 is relative to the proximal joint
 	float requestedMinRadius;						// requested minimum radius
