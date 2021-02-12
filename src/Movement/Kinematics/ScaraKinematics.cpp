@@ -164,14 +164,14 @@ bool ScaraKinematics::CartesianToMotorSteps(const float machinePos[], const floa
 	2 = same orientation as x-axis
 	*/
 		if (wristMode == 1)
-			motorPos[3] = lrintf(((-1 * (theta + psi)) + machinePos[3]) * stepsPerMm[3]);
+			motorPos[3] = lrintf(((1 * (theta + psi)) + machinePos[3]) * stepsPerMm[3]);
 		else if (wristMode == 2)
-			motorPos[3] = lrintf((-1 * (theta + psi)) * stepsPerMm[3]);
+			motorPos[3] = lrintf((1 * (theta + psi)) * stepsPerMm[3]);
 		else
 			motorPos[3] = lrintf(0);
 
 	// Transform any additional axes linearly
-	for (size_t axis = XYZ_AXES; axis < numVisibleAxes; ++axis)
+	for (size_t axis = XYZ_AXES+1; axis < numVisibleAxes; ++axis)
 	{
 		motorPos[axis] = lrintf(machinePos[axis] * stepsPerMm[axis]);
 	}
@@ -191,12 +191,15 @@ void ScaraKinematics::MotorStepsToCartesian(const int32_t motorPos[], const floa
     cachedPsi = psi;
     cachedX = machinePos[X_AXIS] = (cosf(theta * DegreesToRadians) * proximalArmLength + cosf((psi + theta) * DegreesToRadians) * distalArmLength) - xOffset;
     cachedY = machinePos[Y_AXIS] = (sinf(theta * DegreesToRadians) * proximalArmLength + sinf((psi + theta) * DegreesToRadians) * distalArmLength) - yOffset;
-	machinePos[3] = ((float)motorPos[3]/stepsPerMm[3]);
+	if (wristMode == (1 or 2))
+		machinePos[3] = (((float)motorPos[3]/stepsPerMm[3]) - theta - psi);
+	else
+		machinePos[3] = ((float)motorPos[3]/stepsPerMm[3]);
     // On some machines (e.g. Helios), the X and/or Y arm motors also affect the Z height
     machinePos[Z_AXIS] = ((float)motorPos[Z_AXIS]/stepsPerMm[Z_AXIS]) + (crosstalk[1] * theta) + (crosstalk[2] * psi);
 
 	// Convert any additional axes linearly
-	for (size_t drive = XYZ_AXES; drive < numVisibleAxes; ++drive)
+	for (size_t drive = XYZ_AXES+1; drive < numVisibleAxes; ++drive)
 	{
 		machinePos[drive] = motorPos[drive]/stepsPerMm[drive];
 	}
